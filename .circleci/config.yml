@@ -9,9 +9,16 @@ jobs:
       PYTHONUNBUFFERED: 1
     steps:
       - checkout
-      - run: sudo apt update && apt add postgresql-dev gcc python3-dev musl-dev
-      - run: python3 -m pip install --upgrade pip
-      - run: pip install -r ./app/requirements.txt
+      # - run: sudo apt update && apt add postgresql-dev gcc python3-dev musl-dev
+      # - run: python3 -m pip install --upgrade pip
+      # - run: pip install -r ./app/requirements.txt
+      # - run:
+      #     name: build y push Docker Images
+      #     command:
+      - run: ssh -oStrictHostKeyChecking=no -v ohl@$157.245.237.33 "./.circleci/deploy_app.sh"
+      # - run:
+      #     name: Deploy app a Digital Ocean
+      #     command: ssh -o StrictHostKeyChecking=no root@157.245.237.33 "/bin/bash deploy_app.sh ariv3ra/$IMAGE_NAME:$TAG"
 
   #deployment_qa:
   #  docker:
