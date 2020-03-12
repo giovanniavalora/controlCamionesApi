@@ -32,6 +32,13 @@ jobs:
   #    //eliminar comprimido
   #    //reload al contenedor de la api
 
+  deploy_qa:
+    steps:
+      - checkout
+      - run:
+        name: Deploy master to DigitalOcean
+        command: git pull https://github.com/giovanniavalora/controlCamionesApi.git
+
 workflow:
   version: 2
   build_deploy:
