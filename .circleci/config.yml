@@ -20,7 +20,7 @@ jobs:
       #     name: Deploy app a Digital Ocean
       #     command: ssh -o StrictHostKeyChecking=no root@157.245.237.33 "/bin/bash deploy_app.sh ariv3ra/$IMAGE_NAME:$TAG"
 
-  #deployment_qa:
+  # deployment_qa:
   #  docker:
   #    - image: circleci/python3.7.6
   #  working_directory: ~/apiohl
@@ -32,12 +32,12 @@ jobs:
   #    //eliminar comprimido
   #    //reload al contenedor de la api
 
-  deploy_qa:
-    steps:
-      - checkout
-      - run:
-          name: Deploy master to DigitalOcean
-          command: git pull https://github.com/giovanniavalora/controlCamionesApi.git
+  # deploy_qa:
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Deploy master to DigitalOcean
+  #         command: git pull https://github.com/giovanniavalora/controlCamionesApi.git
 
 workflow:
   version: 2
