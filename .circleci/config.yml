@@ -36,8 +36,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Deploy master to DigitalOcean
-        command: git pull https://github.com/giovanniavalora/controlCamionesApi.git
+          name: Deploy master to DigitalOcean
+          command: git pull https://github.com/giovanniavalora/controlCamionesApi.git
 
 workflow:
   version: 2
