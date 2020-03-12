@@ -1,2 +1,3 @@
 cd /home/ohl/controlCamionesApi/
-sudo docker-compose -f docker-compose.prod.yml up -d --build
+git pull https://github.com/giovanniavalora/controlCamionesApi.git
+docker-compose -f docker-compose.prod.yml up -d --build
