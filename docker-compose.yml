@@ -20,6 +20,15 @@ services:
       - POSTGRES_USER=ohl
       - POSTGRES_PASSWORD=ohl
       - POSTGRES_DB=ohlcamiones
+  app:
+    container_name: mantenedorCamiones
+    restart: always
+    build: ./mantenedorCamiones
+    volumes: 
+      - ./mantenedorCamiones:/var/mantenedorCamiones
+      - /var/mantenedorCamiones/node_modules
+    ports:
+      - "3000:3000"
 
 volumes:
   postgres_data:
