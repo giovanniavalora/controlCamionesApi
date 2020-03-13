@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7.6
-    working_directory: ~/apiohl
+    working_directory: ~/controlCamionesApi
     environment:
       PYTHONDONTWRITEBYTECODE: 1
       PYTHONUNBUFFERED: 1
