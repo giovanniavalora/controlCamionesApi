@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  web:
+  web:      #apimobile
     build:
       context: ./apimobile
       dockerfile: Dockerfile.prod
@@ -12,6 +12,17 @@ services:
       - 8000
     env_file:
       - ./.env.prod
+    depends_on:
+      - db
+  apiman:   #apimantenedor
+    build: ./apimantenedor
+    command: python manage.py runserver 0.0.0.0:5000
+    volumes:
+      - ./apimobile/:/usr/src/apimantenedor/
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env.dev
     depends_on:
       - db
   db:

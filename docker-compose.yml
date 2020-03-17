@@ -1,13 +1,24 @@
 version: '3.7'
 
 services:
-  web:
+  apimob:
     build: ./apimobile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./apimobile/:/usr/src/apimobile/
     ports:
       - 8000:8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  apiman:
+    build: ./apimantenedor
+    command: python manage.py runserver 0.0.0.0:5000
+    volumes:
+      - ./apimobile/:/usr/src/apimantenedor/
+    ports:
+      - 5000:5000
     env_file:
       - ./.env.dev
     depends_on:
@@ -20,15 +31,15 @@ services:
       - POSTGRES_USER=ohl
       - POSTGRES_PASSWORD=ohl
       - POSTGRES_DB=ohlcamiones
-  app:
-    container_name: mantenedorCamiones
-    restart: always
-    build: ./mantenedorCamiones
-    volumes: 
-      - ./mantenedorCamiones:/var/mantenedorCamiones
-      - /var/mantenedorCamiones/node_modules
-    ports:
-      - "3000:3000"
+  # app:
+  #   container_name: mantenedorCamiones
+  #   restart: always
+  #   build: ./mantenedorCamiones
+  #   volumes: 
+  #     - ./mantenedorCamiones:/var/mantenedorCamiones
+  #     - /var/mantenedorCamiones/node_modules
+  #   ports:
+  #     - "3000:3000"
 
 volumes:
   postgres_data:
