@@ -16,7 +16,7 @@ services:
     build: ./apimantenedor
     command: python manage.py runserver 0.0.0.0:5000
     volumes:
-      - ./apimobile/:/usr/src/apimantenedor/
+      - ./apimantenedor/:/usr/src/apimantenedor/
     ports:
       - 5000:5000
     env_file:
