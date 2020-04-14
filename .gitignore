@@ -1,8 +1,10 @@
 #Apis
 apimobile/
 apimantenedor/
+mantenedor/
 apidummy/
 .vscode/
+.idea/
 
 #Develop
 # .env.dev
