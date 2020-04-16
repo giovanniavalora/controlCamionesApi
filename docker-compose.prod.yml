@@ -40,7 +40,7 @@ services:
     restart: always
     build: 
       context: ./mantenedor
-      dockerfile: Dockerfile.prod
+      # dockerfile: Dockerfile.prod
     volumes:
       - ./mantenedor/:/src/mantenedor
     expose: 
