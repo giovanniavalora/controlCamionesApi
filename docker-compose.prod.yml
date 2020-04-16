@@ -38,7 +38,9 @@ services:
   mantenedor:
     container_name: mantenedor
     restart: always
-    build: ./mantenedor
+    build: 
+      context: ./mantenedor
+      dockerfile: Dockerfile.prod
     volumes:
       - ./mantenedor/:/src/mantenedor
     expose: 
