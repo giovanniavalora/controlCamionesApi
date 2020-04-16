@@ -40,11 +40,12 @@ services:
     restart: always
     build: 
       context: ./mantenedor
-      # dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.prod
     volumes:
       - ./mantenedor/:/src/mantenedor
-    expose: 
-      - 3000
+      - /src/mantenedor/node_modules
+    ports: 
+      - "3000:3000"
     
 
   nginx:
