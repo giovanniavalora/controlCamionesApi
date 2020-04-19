@@ -40,8 +40,10 @@ services:
     build: ./mantenedor
     volumes:
       - ./mantenedor/:/src/mantenedor
+      - /src/mantenedor/node_modules
     ports: 
       - 3000:3000
+    command: npm run dev
 
 volumes:
   postgres_data:
