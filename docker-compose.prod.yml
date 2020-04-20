@@ -46,10 +46,8 @@ services:
       - /src/mantenedor/node_modules
     ports: 
       - "3000:3000"
-    # command:
-    #   # - "npm run build"
-    #   - "npm run start"
     command: npm run dev
+    #   - "npm run start"
     
 
   nginx:
@@ -63,7 +61,7 @@ services:
       # - "443:443"
     depends_on:
       - web
-      - mantenedor
+      # - mantenedor
 
 volumes:
   postgres_data:
