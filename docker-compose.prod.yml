@@ -46,7 +46,7 @@ services:
       - /src/mantenedor/node_modules
     ports: 
       - "3000:3000"
-    # command:
+    command:
       - "npm run build"
       - "npm run start"
     # command: npm run dev
