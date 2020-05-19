@@ -18,7 +18,7 @@ services:
 
   apiman:   #apimantenedor
     build: ./apimantenedor
-    command: python manage.py runserver 0.0.0.0:5000
+    command: python manage.py runserver 127.0.0.1:5000
     volumes:
       - ./apimantenedor/:/usr/src/apimantenedor/
     ports:
