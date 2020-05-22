@@ -44,11 +44,11 @@ services:
       dockerfile: Dockerfile.prod
     volumes:
       - ./mantenedor/:/src/mantenedor
-      # - /src/mantenedor/node_modules
+      - /src/mantenedor/node_modules
     ports: 
       - "3000:3000"
     command: npm run start
-    #   - "npm run start"
+    #   - "npm run dev"
     
 
   nginx:
