@@ -44,7 +44,7 @@ services:
       dockerfile: Dockerfile.prod
     volumes:
       - ./mantenedor/:/src/mantenedor
-      - /src/mantenedor/node_modules
+      - node_modules:/src/mantenedor/node_modules
     ports: 
       - "3000:3000"
     command: npm run start
@@ -67,3 +67,4 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
+  node_modules:
