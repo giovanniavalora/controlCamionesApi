@@ -57,7 +57,7 @@ services:
       - media_volume:/home/apimobile/web/mediafiles
     ports:
       - "1337:8000"
-      - "80:3000" 
+      # - "80:3000" 
       # - "443:443"
     depends_on:
       - web
