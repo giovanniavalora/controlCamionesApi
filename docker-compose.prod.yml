@@ -46,7 +46,7 @@ services:
       - ./mantenedor/:/src/mantenedor
       - node_modules:/src/mantenedor/node_modules
     ports: 
-      - "80:80"
+      - "3000:3000"
     command: npm run dev
     
 
@@ -57,7 +57,7 @@ services:
       - media_volume:/home/apimobile/web/mediafiles
     ports:
       - "1337:8000"
-      - "80:80" 
+      - "80:3000" 
       # - "443:443"
     depends_on:
       - web
