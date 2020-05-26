@@ -61,7 +61,6 @@ services:
       - "443:443"
     depends_on:
       - web
-      - mantenedor
 
 volumes:
   postgres_data:
