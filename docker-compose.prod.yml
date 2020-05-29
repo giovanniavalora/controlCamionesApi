@@ -45,10 +45,10 @@ services:
     volumes:
       - ./mantenedor/:/src/mantenedor
       - node_modules:/src/mantenedor/node_modules
-    # expose: 
-    #   - 80
-    ports:
-      - "80:80"
+    expose: 
+      - 80
+    # ports:
+    #   - "80:80"
     command: npm run dev
     
 
@@ -60,7 +60,7 @@ services:
     ports:
       - "1337:8000"
       - "443:443"
-      # - "80:80" 
+      - "80:80" 
     depends_on:
       - web
 
