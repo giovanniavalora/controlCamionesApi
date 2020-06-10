@@ -47,7 +47,7 @@ services:
       - ./mantenedor/:/src/mantenedor
       - node_modules:/src/mantenedor/node_modules
     expose: 
-      - 80
+      - 3000
     # ports:
     #   - "80:80"
     command: npm run dev
@@ -64,7 +64,7 @@ services:
     ports:
       - "1337:8000"
       - "443:443"
-      - "80:80" 
+      - "80:3000" 
     # command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     # depends_on:
     #   - web
