@@ -53,5 +53,7 @@ services:
     command: npm run dev
 
 volumes:
+  static_volume:
+  media_volume:
   postgres_data:
   node_modules:
