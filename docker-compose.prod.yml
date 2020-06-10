@@ -47,7 +47,7 @@ services:
       - ./mantenedor/:/src/mantenedor
       - node_modules:/src/mantenedor/node_modules
     ports: 
-      - "80:3000"
+      - "82:3000"
     # ports:
     #   - "80:80"
     command: npm run dev
