@@ -88,4 +88,4 @@ volumes:
   web-root:
 networks:
   app-network:
-  driver: bridge
+    driver: bridge
