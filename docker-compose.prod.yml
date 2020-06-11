@@ -40,20 +40,52 @@ services:
   mantenedor:
     container_name: mantenedor
     restart: always
+    networks:
+      - app-network
     build: 
       context: ./mantenedor
       dockerfile: Dockerfile.prod
     volumes:
       - ./mantenedor/:/src/mantenedor
       - node_modules:/src/mantenedor/node_modules
-    ports: 
-      - "80:3000"
-    # ports:
-    #   - "80:80"
     command: npm run dev
+    expose: 3000
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - mantenedor
+    networks:
+        - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --staging -d faena.app -d www.faena.app -d
 
 volumes:
   static_volume:
   media_volume:
   postgres_data:
   node_modules:
+  certbot-etc:
+  certbot-var:
+  web-root:
+networks:
+  app-network:
+  driver: bridge
