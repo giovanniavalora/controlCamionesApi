@@ -77,7 +77,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --staging -d faena.app -d www.faena.app -d
+    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --staging -d faena.app -d www.faena.app
 
 volumes:
   static_volume:
