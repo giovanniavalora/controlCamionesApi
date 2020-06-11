@@ -49,7 +49,6 @@ services:
       - ./mantenedor/:/src/mantenedor
       - node_modules:/src/mantenedor/node_modules
     command: npm run dev
-    expose: 3000
 
   webserver:
     image: nginx:mainline-alpine
