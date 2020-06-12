@@ -65,6 +65,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "1337:8000"
     volumes:
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
