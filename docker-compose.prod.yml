@@ -26,7 +26,8 @@ services:
     command: python manage.py runserver 0.0.0.0:5000
     volumes:
       - ./apimantenedor/:/usr/src/apimantenedor/
-      #agregar static_volume y media_volume para centralizar el almacenamiento y servir desde un solo lugar?
+      - static_volume:/home/apimobile/web/staticfiles
+      - media_volume:/home/apimobile/web/mediafiles
     ports:
       - "5000:5000"
     env_file:
@@ -69,6 +70,8 @@ services:
       - "443:443"
       - "1337:8000"
     volumes:
+      - static_volume:/home/apimobile/web/staticfiles
+      - media_volume:/home/apimobile/web/mediafiles
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
