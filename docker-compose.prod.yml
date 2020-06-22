@@ -21,6 +21,7 @@ services:
       - app-network
 
   apiman:   #apimantenedor
+    container_name: apiman
     build: ./apimantenedor
     # command: python manage.py runserver 127.0.0.1:5000
     command: python manage.py runserver 0.0.0.0:5000
@@ -91,7 +92,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --force-renewal -d faena.app -d www.faena.app
+    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --force-renewal -d faena.app -d www.faena.app -d ohl.faena.app
 
 volumes:
   static_volume:
