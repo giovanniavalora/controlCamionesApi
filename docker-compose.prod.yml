@@ -74,8 +74,7 @@ services:
       - static_volume:/home/apimobile/web/staticfiles
       - media_volume:/home/apimobile/web/mediafiles
       - web-root:/var/www/html
-      # - ./nginx:/etc/nginx/conf.d
-      - ./nginx:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - dhparam:/etc/ssl/certs
@@ -93,8 +92,8 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --staging -d faena.app -d www.faena.app -d ohl.faena.app
     # command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --force-renewal -d faena.app -d www.faena.app -d ohl.faena.app
-    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --force-renewal -d faena.app -d www.faena.app -d ohl.faena.app
 
 volumes:
   static_volume:
