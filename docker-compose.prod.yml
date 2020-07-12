@@ -74,7 +74,8 @@ services:
       - static_volume:/home/apimobile/web/staticfiles
       - media_volume:/home/apimobile/web/mediafiles
       - web-root:/var/www/html
-      - ./nginx:/etc/nginx/conf.d
+      # - ./nginx:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/nginx.conf
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - dhparam:/etc/ssl/certs
