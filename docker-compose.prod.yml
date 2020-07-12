@@ -63,7 +63,7 @@ services:
       - app-network
 
   webserver:
-    image: nginx:mainline-alpine
+    image: nginx:1.17.10-alpine
     container_name: webserver
     restart: unless-stopped
     ports:
