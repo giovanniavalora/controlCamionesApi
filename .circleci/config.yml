@@ -23,6 +23,8 @@ jobs:
       - checkout
 
   deploy-qa:
+    machine:
+      enabled:true
     working_directory: ~/controlCamionesApi
     environment:
       PYTHONDONTWRITEBYTECODE: 1
@@ -32,6 +34,8 @@ jobs:
       - run: ssh -oStrictHostKeyChecking=no -v ohl@157.245.237.33 "/home/ohl/controlCamionesApi/.circleci/deploy_app_qa.sh"
 
   deploy-master:
+    machine:
+      enabled:true
     working_directory: ~/controlCamionesApi
     environment:
       PYTHONDONTWRITEBYTECODE: 1
