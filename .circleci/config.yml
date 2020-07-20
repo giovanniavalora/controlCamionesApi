@@ -1,18 +1,22 @@
-version: 2
-
 workflow:
+  version: 2
   build_deploy:
     jobs:
-      - deploy-qa
-      - deploy-master
-
+      - build
+      - deploy-qa:
+        filters:
+          branches:
+            only: develop
+      - deploy-master:
+        filters:
+          branches:
+            only: develop
+      
 jobs:
-  deploy-qa:
+  build:
     docker:
       - image: circleci/python:3.7.6
-    branches:
-      only:
-        - develop
+  deploy-qa:
     working_directory: ~/controlCamionesApi
     environment:
       PYTHONDONTWRITEBYTECODE: 1
@@ -22,11 +26,6 @@ jobs:
       - run: ssh -oStrictHostKeyChecking=no -v ohl@157.245.237.33 "/home/ohl/controlCamionesApi/.circleci/deploy_app_qa.sh"
 
   deploy-master:
-    docker:
-      - image: circleci/python:3.7.6
-    branches:
-      only:
-        - master
     working_directory: ~/controlCamionesApi
     environment:
       PYTHONDONTWRITEBYTECODE: 1
