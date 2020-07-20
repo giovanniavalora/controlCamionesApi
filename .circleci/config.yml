@@ -1,4 +1,11 @@
 version: 2
+
+workflow:
+  build_deploy:
+    jobs:
+      - deploy-qa
+      - deploy-master
+
 jobs:
   deploy-qa:
     docker:
@@ -29,9 +36,4 @@ jobs:
       - run: ssh -oStrictHostKeyChecking=no -v ohl@157.245.237.33 "/home/ohl/controlCamionesApi/.circleci/deploy_app_prod.sh"
 
 
-workflow:
-  version: 2
-  build_deploy:
-    jobs:
-      - deploy-qa
-      - deploy-master
+
