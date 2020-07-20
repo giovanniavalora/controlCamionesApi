@@ -8,39 +8,108 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --reload
     volumes:
       - static_volume:/home/apimobile/web/staticfiles
+      - media_volume:/home/apimobile/web/mediafiles
+    # ports:
+    #   - "1337:8000"
     expose:
       - 8000
     env_file:
       - ./.env.prod
     depends_on:
       - db
+    networks:
+      - app-network
+
   apiman:   #apimantenedor
+    container_name: apiman
     build: ./apimantenedor
+    # command: python manage.py runserver 127.0.0.1:5000
     command: python manage.py runserver 0.0.0.0:5000
     volumes:
       - ./apimantenedor/:/usr/src/apimantenedor/
+      - static_volume:/home/apimobile/web/staticfiles
+      - media_volume:/home/apimobile/web/mediafiles
     ports:
-      - 5000:5000
+      - "5000:5000"
     env_file:
       - ./.env.prod
     depends_on:
       - db
+    networks:
+      - app-network
+
   db:
     image: postgres:12.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod.db
-  nginx:
-    build: ./nginx
+    networks:
+      - app-network
+
+  mantenedor:
+    container_name: mantenedor
+    restart: always
+    build: 
+      context: ./mantenedor
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./mantenedor/:/src/mantenedor
+      - node_modules:/src/mantenedor/node_modules
+    command: npm run dev
+    expose:
+      - 3000
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:1.17.10-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "1337:8000"
     volumes:
       - static_volume:/home/apimobile/web/staticfiles
-    ports:
-      - "1337:8000"
-      - "443:443"
+      - media_volume:/home/apimobile/web/mediafiles
+      - web-root:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     depends_on:
-      - web
+      - mantenedor
+    networks:
+        - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    # command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --staging -d faena.app -d www.faena.app -d ohl.faena.app
+    command: certonly --webroot --webroot-path=/var/www/html --email giovanni.aravena@avalora.com --agree-tos --no-eff-email --force-renewal -d ohl.faena.app
+
 
 volumes:
-  postgres_data:
   static_volume:
+  media_volume:
+  postgres_data:
+  node_modules:
+  certbot-etc:
+  certbot-var:
+  web-root:
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ohl/controlCamionesApi/mantenedor/dhparam
+      o: bind  
+networks:
+  app-network:
+    driver: bridge

@@ -1,7 +1,13 @@
 #Apis
 apimobile/
 apimantenedor/
+mantenedor/
+apidummy/
+.vscode/
+.idea/
 
 #Develop
 .env.dev
-docker-compose.yml
+.env.prod
+.env.prod.db
+# docker-compose.yml

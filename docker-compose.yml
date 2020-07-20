@@ -12,6 +12,7 @@ services:
       - ./.env.dev
     depends_on:
       - db
+
   apiman:
     build: ./apimantenedor
     command: python manage.py runserver 0.0.0.0:5000
@@ -23,6 +24,7 @@ services:
       - ./.env.dev
     depends_on:
       - db
+
   db:
     image: postgres:12.0-alpine
     volumes:
@@ -31,15 +33,17 @@ services:
       - POSTGRES_USER=ohl
       - POSTGRES_PASSWORD=ohl
       - POSTGRES_DB=ohlcamiones
-  # app:
-  #   container_name: mantenedorCamiones
-  #   restart: always
-  #   build: ./mantenedorCamiones
-  #   volumes: 
-  #     - ./mantenedorCamiones:/var/mantenedorCamiones
-  #     - /var/mantenedorCamiones/node_modules
-  #   ports:
-  #     - "3000:3000"
+
+  mantenedor:
+    container_name: mantenedor
+    restart: always
+    build: ./mantenedor
+    volumes:
+      - ./mantenedor/:/src/mantenedor
+      # - /src/mantenedor/node_modules
+    ports: 
+      - 3000:3000
+    command: npm run dev
 
 volumes:
   postgres_data:
