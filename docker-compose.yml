@@ -12,6 +12,8 @@ services:
       - ./.env.dev
     depends_on:
       - db
+    networks:
+      - app-network
 
   apiman:
     build: ./apimantenedor
@@ -24,15 +26,45 @@ services:
       - ./.env.dev
     depends_on:
       - db
+    networks:
+      - app-network
 
   db:
     image: postgres:12.0-alpine
+    restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+        - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=ohl
-      - POSTGRES_PASSWORD=ohl
-      - POSTGRES_DB=ohlcamiones
+        - POSTGRES_USER=ohl
+        - POSTGRES_PASSWORD=ohl
+        - POSTGRES_DB=ohlcamiones
+    networks:
+      - app-network
+  
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    volumes:
+        - ./backup:/backups
+    links:
+        - db
+    depends_on:
+        - db
+    environment:
+        - POSTGRES_HOST=db
+        - POSTGRES_DB=ohlcamiones
+        - POSTGRES_USER=ohl
+        - POSTGRES_PASSWORD=ohl
+      #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
+        - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
+        # - SCHEDULE=@every 12h00m00s #cada 12 horas
+        - SCHEDULE=@daily
+        - BACKUP_KEEP_DAYS=7
+        - BACKUP_KEEP_WEEKS=4
+        - BACKUP_KEEP_MONTHS=6
+        - HEALTHCHECK_PORT=81
+    networks:
+      - app-network
 
   mantenedor:
     container_name: mantenedor
@@ -44,6 +76,12 @@ services:
     ports: 
       - 3000:3000
     command: npm run dev
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
