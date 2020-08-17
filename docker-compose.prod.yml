@@ -47,6 +47,30 @@ services:
     networks:
       - app-network
 
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    volumes:
+        - ./backup:/backups
+    links:
+        - db
+    depends_on:
+        - db
+    env_file:
+      - ./.env.prod.db
+    environment:
+        - POSTGRES_HOST=db
+      #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
+        - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
+        # - SCHEDULE=@every 12h00m00s #cada 12 horas
+        - SCHEDULE=@daily
+        - BACKUP_KEEP_DAYS=7
+        - BACKUP_KEEP_WEEKS=4
+        - BACKUP_KEEP_MONTHS=6
+        - HEALTHCHECK_PORT=81
+    networks:
+      - app-network
+
   mantenedor:
     container_name: mantenedor
     restart: always
